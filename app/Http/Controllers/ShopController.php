@@ -37,7 +37,7 @@ class ShopController extends Controller
         $user = Auth::user();
         $totalBarang_awal =Pesanan::select('total_barang')
         ->where('id_products',$request->id_products)
-        ->where('id_user',$user->id)->first();
+        ->where('id_user',$user->id)->whereNull('status_order')->first();
         $get_harga_pcs = Products::select('harga')->where('id',$request->id_products)->first();
         if($totalBarang_awal == null){
            
@@ -53,7 +53,7 @@ class ShopController extends Controller
             $get_totalBarang = $totalBarang_awal->total_barang+1;
             $total_harga = $get_harga_pcs->harga * $get_totalBarang;
             $post   =   Pesanan::where('id_products',$request->id_products)
-            ->where('id_user',$user->id)->update([
+            ->where('id_user',$user->id)->whereNull('status_order')->update([
                 'total_barang' => $get_totalBarang,
                 'total_harga' => $total_harga,
                 
@@ -64,7 +64,7 @@ class ShopController extends Controller
     public function get_chart(Request $request)
     {
         $user = Auth::user();
-        $total_chart = Pesanan::where('id_user',$user->id)->sum('total_barang');
+        $total_chart = Pesanan::where('id_user',$user->id)->whereNull('status_order')->sum('total_barang');
         return response()->json($total_chart);
     }
 }

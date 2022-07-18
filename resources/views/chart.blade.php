@@ -59,7 +59,7 @@
                             <h5 class="font-weight-bold">Total</h5>
                            
                         </div>
-                        <button class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
+                        <button class="btn btn-block btn-primary my-3 py-3"><a href="/chekout" style="color:black">Proceed To Checkout</a></button>
                     </div>
                 </div>
             </div>
@@ -76,6 +76,7 @@
     <script>
         var shipping = 10000;
         var total;
+        var authUser = {!! App\Models\User::where('id', auth()->id())->first(); !!};
         $(document).ready(function () {
                 $.ajaxSetup({
                     headers: {
@@ -84,8 +85,7 @@
                 });      
         });  
 
-        $(document).ready(function () {
-            
+        $(document).ready(function () {         
             $.ajax({
                             type:'get',
                             url:"/subtotal",
@@ -103,7 +103,8 @@
             $('#table_chart').DataTable({
                 processing: true,
                 serverSide: true, //aktifkan server-side      
-                ajax: {   
+                ajax: {  
+
                     url: "/data-chart",
                     type: 'GET',
                 },
@@ -154,7 +155,7 @@
                             success:function(data){ 
                                  total = parseInt(data)+shipping;
                                  document.getElementById("subtotal").innerHTML += '<h6 class="font-weight-medium" id="total_belanja">Rp.'+data+'</h6>';
-                                 document.getElementById("total").innerHTML += ' <h5 class="font-weight-bold">Rp.'+total+'</h5>';     
+                                 document.getElementById("total").innerHTML += ' <h5 class="font-weight-bold" id="total_plusShipping">Rp.'+total+'</h5>';       
                             },
                             error: function (data) { //jika error tampilkan error pada console
                                 console.log('Error:', data);
@@ -185,10 +186,11 @@
             }
             document.getElementById("total_belanja").remove();
             document.getElementById("total_plusShipping").remove();
-             $.ajax({
+            $.ajax({
                     type:'POST',
-                    url:"/update-chart",
-                    data:{id_products:dataId,total_barang:newVal},
+                    headers : {'Authorization' : 'Bearer '+authUser.api_token},
+                    url: "/api/v1/update",
+                    data:{id_pesanan:dataId,total_barang:newVal},
                     dataType: 'json',
                     success:function(data){
                         var oTable = $('#table_chart').dataTable(); 
@@ -199,7 +201,7 @@
                             success:function(data){ 
                                  total = parseInt(data)+shipping;
                                  document.getElementById("subtotal").innerHTML += '<h6 class="font-weight-medium" id="total_belanja">Rp.'+data+'</h6>';
-                                 document.getElementById("total").innerHTML += ' <h5 class="font-weight-bold">Rp.'+total+'</h5>';     
+                                 document.getElementById("total").innerHTML += ' <h5 class="font-weight-bold" id="total_plusShipping">Rp.'+total+'</h5>';     
                             },
                             error: function (data) { //jika error tampilkan error pada console
                                 console.log('Error:', data);

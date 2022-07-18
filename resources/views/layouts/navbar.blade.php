@@ -57,6 +57,7 @@
                         <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }}</a>
                                 <div class="dropdown-menu rounded-0 m-0">
+                                    <a href="/list-order" class="dropdown-item">My Orders</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                                     onclick="event.preventDefault();
                                                                     document.getElementById('logout-form').submit();">
@@ -66,12 +67,14 @@
                                                         @csrf
                                     </form>
                                 </div>
+                              
                         </div>
 
                         @else
                             <a href="/login" class="nav-item nav-link">Login</a>
+                            <a href="/register" class="nav-item nav-link">Register</a>
                         @endauth
-                            <a href="" class="nav-item nav-link">Register</a>
+                            
                         </div>
                     </div>
                 </nav>

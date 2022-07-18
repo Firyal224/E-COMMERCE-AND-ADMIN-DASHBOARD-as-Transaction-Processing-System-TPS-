@@ -5,6 +5,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ChartController;
+use App\Http\Controllers\ChekoutController;
+use App\Http\Controllers\ReceiptController;
+use App\Http\Controllers\ListOrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -55,6 +58,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/subtotal', [ChartController::class, 'get_subtotal']);
     Route::delete('/delete/{id}', [ChartController::class, 'destroy']);
     Route::post('/update-chart', [ChartController::class, 'update']);
+
+    Route::get('/chekout', [ChekoutController::class, 'index']);
+    Route::post('/order', [ChekoutController::class, 'store']);
+
+    Route::get('/receipt/{id}', [ReceiptController::class, 'index']);
+    Route::post('/upload-pembayaran', [ReceiptController::class, 'store']);
+
+    Route::get('/list-order', [ListOrderController::class, 'index']);
+    Route::get('/data-list-order', [ListOrderController::class, 'datatable_orders']);
 });
 
 

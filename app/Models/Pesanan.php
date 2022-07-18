@@ -9,7 +9,7 @@ class Pesanan extends Model
 {
     use HasFactory;
     protected $table = 'pesanans';
-    protected $fillable = ['id_products', 'id_user','total_barang','total_harga'];
+    protected $fillable = ['id_products', 'id_user','total_barang','total_harga','status_order'];
     public function products()
     {
         return $this->belongsTo(Products::class, 'id_products');

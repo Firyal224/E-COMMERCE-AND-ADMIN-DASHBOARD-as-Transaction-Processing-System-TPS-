@@ -55,11 +55,6 @@ class LoginController extends Controller
             return redirect('/cek-role');
         }
         //valid credential
-
-        
-
-        
- 	    
         
  		//Token created, return with success response and jwt token
          

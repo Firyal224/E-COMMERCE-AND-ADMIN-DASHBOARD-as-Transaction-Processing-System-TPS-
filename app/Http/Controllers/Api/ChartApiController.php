@@ -1,25 +1,28 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Kategori;
 use App\Models\Products;
 use App\Models\Pesanan;
 use Auth;
 use DataTables;
-class ChartController extends Controller
+
+class ChartApiController extends Controller
 {
     //
+
     public function index(Request $request){
         $categories = Kategori::all();
-        return view('chart',compact('categories'));
+        return response()->json($categories);
     }
 
     public function datatable_chart(Request $request){
 
         $user = Auth::user();
-        $data = Pesanan::with('products')->where('id_user',$user->id)->whereNull('status_order')->get();
+        $data = Pesanan::with('products')->where('id_user',$user->id)->get();
     
         return DataTables::of($data)
             ->addColumn('product', function ($data){
@@ -71,8 +74,7 @@ class ChartController extends Controller
 
     public function get_subtotal(Request $request){
         $user = Auth::user();
-        $subtotal = Pesanan::where('id_user',$user->id)->whereNull('status_order')->sum('total_harga');
+        $subtotal = Pesanan::where('id_user',$user->id)->sum('total_harga');
         return response()->json($subtotal);
     }
- }
-
+}

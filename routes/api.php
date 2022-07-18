@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
-// use App\Http\Controllers\Api\AdminApiController;
+use App\Http\Controllers\Api\ChartApiController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,9 +28,10 @@ Route::middleware('api')->namespace('Api') ->prefix('auth')->group(function () {
 
 // APIIII
 
-// Route::middleware('jwt.verify:admin')->prefix('v1')->group(function () {
-//     Route::post('/admin/store', [AdminApiController::class, 'store']);
-//     Route::get('/edit/{id}', [AdminApiController::class, 'edit']);
-//     Route::get('/upload/artikel', [AdminApiController::class, 'data_table']);
-//     Route::delete('/admin/delete/{id}', [AdminApiController::class, 'destroy']);
-// });
+Route::middleware('jwt.verify:user')->prefix('v1')->group(function () {
+    Route::get('/subtotal', [ChartApiController::class, 'get_subtotal']);
+    Route::get('/chart', [ChartApiController::class, 'index']);
+    Route::post('/update', [ChartApiController::class, 'update']);
+    Route::delete('/destroy', [ChartApiController::class, 'destroy']);
+
+});
