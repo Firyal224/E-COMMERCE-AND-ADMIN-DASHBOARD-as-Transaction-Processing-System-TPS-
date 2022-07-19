@@ -30,8 +30,6 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 
 
 Route::get('/cek-role', function () {
-    
-    
     if(auth()->user()->hasRole('admin')){
      
         // return redirect('/admin');
@@ -53,6 +51,7 @@ Route::get('/show-detail/{id}', [ShopController::class, 'show']);
 Route::group(['middleware' => 'auth'], function () {
     Route::post('/add-chart', [ShopController::class, 'add_chart']);
     Route::get('/get-chart', [ShopController::class, 'get_chart']);
+    
     Route::get('/chart', [ChartController::class, 'index']);
     Route::get('/data-chart', [ChartController::class, 'datatable_chart']);
     Route::get('/subtotal', [ChartController::class, 'get_subtotal']);

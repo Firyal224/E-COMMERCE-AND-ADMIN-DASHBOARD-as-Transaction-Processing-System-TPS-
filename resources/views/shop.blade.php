@@ -231,8 +231,9 @@
             }else{
              
                 $.ajax({
+                            headers : {'Authorization' : 'Bearer '+authUser.api_token},
                             type:'get',
-                            url:"/get-chart",
+                            url:"/api/v1/get-chart",
                             success:function(data){ 
                                 console.log(data);
                                 document.getElementById("total-chart").innerHTML += '<span class="badge" id="integer">'+data+'</span>';
@@ -317,15 +318,17 @@
             }else{
                 console.log("y");
                 $.ajax({
+                    headers : {'Authorization' : 'Bearer '+authUser.api_token},
                     type:'POST',
-                    url:"/add-chart",
+                    url:"/api/v1/add-chart",
                     data:{id_user:authUser.id,id_products:$id,total_barang:totalBarang},
                     dataType: 'json',
                     success:function(data){ 
                         document.getElementById("integer").remove();
                         $.ajax({
+                            headers : {'Authorization' : 'Bearer '+authUser.api_token},
                             type:'get',
-                            url:"/get-chart",
+                            url:"/api/v1/get-chart",
                             success:function(data){ 
                                 console.log(data);
                                 document.getElementById("total-chart").innerHTML += '<span class="badge" id="integer">'+data+'</span>';

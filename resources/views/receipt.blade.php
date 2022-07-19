@@ -164,8 +164,9 @@
             }else{
              
                 $.ajax({
+                            headers : {'Authorization' : 'Bearer '+authUser.api_token},
                             type:'get',
-                            url:"/get-chart",
+                            url:"/api/v1/get-chart",
                             success:function(data){ 
                                 console.log(data);
                                 document.getElementById("total-chart").innerHTML += '<span class="badge" id="integer">'+data+'</span>';
@@ -216,13 +217,14 @@
     $("#form-bukti-bayar").submit(function(e) {
             e.preventDefault();
             $.ajax({
-                            url: "/upload-pembayaran",
+                            headers : {'Authorization' : 'Bearer '+authUser.api_token},
+                            url: "/api/v1/upload-pembayaran",
                             type: "POST", 
                             data: new FormData($("#form-bukti-bayar")[0]),
                             contentType: false,
                             processData: false,
                             success:function(data){ 
-                                
+                                window.location.href = "/list-order";
                             },
                             error: function (data) { //jika error tampilkan error pada console
                                 console.log('Error:', data);

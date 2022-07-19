@@ -86,9 +86,10 @@
         });  
 
         $(document).ready(function () {         
-            $.ajax({
+            $.ajax({        
+                            headers : {'Authorization' : 'Bearer '+authUser.api_token},
                             type:'get',
-                            url:"/subtotal",
+                            url:"/api/v1/subtotal",
                             success:function(data){ 
                                  total = parseInt(data)+shipping;
                                  console.log(total);
@@ -104,8 +105,8 @@
                 processing: true,
                 serverSide: true, //aktifkan server-side      
                 ajax: {  
-
-                    url: "/data-chart",
+                    headers : {'Authorization' : 'Bearer '+authUser.api_token},
+                    url: "/api/v1/data-chart",
                     type: 'GET',
                 },
                 columns: [
@@ -144,14 +145,16 @@
             document.getElementById("total_belanja").remove();
             document.getElementById("total_plusShipping").remove();
             $.ajax({
-                url: "/delete/"+dataId, 
+                headers : {'Authorization' : 'Bearer '+authUser.api_token},
+                url: "/api/v1/delete/"+dataId, 
                 type: 'delete',
                 success: function (data) {      
                     var oTable = $('#table_chart').dataTable(); 
                     oTable.fnDraw(false); 
                     $.ajax({
+                            headers : {'Authorization' : 'Bearer '+authUser.api_token},
                             type:'get',
-                            url:"/subtotal",
+                            url:"/api/v1/subtotal",
                             success:function(data){ 
                                  total = parseInt(data)+shipping;
                                  document.getElementById("subtotal").innerHTML += '<h6 class="font-weight-medium" id="total_belanja">Rp.'+data+'</h6>';
@@ -196,8 +199,9 @@
                         var oTable = $('#table_chart').dataTable(); 
                         oTable.fnDraw(false);  
                         $.ajax({
+                            headers : {'Authorization' : 'Bearer '+authUser.api_token},
                             type:'get',
-                            url:"/subtotal",
+                            url:"/api/v1/subtotal",
                             success:function(data){ 
                                  total = parseInt(data)+shipping;
                                  document.getElementById("subtotal").innerHTML += '<h6 class="font-weight-medium" id="total_belanja">Rp.'+data+'</h6>';

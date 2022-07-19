@@ -138,12 +138,14 @@
                 });      
         });  
 
+        var authUser = {!! App\Models\User::where('id', auth()->id())->first(); !!};
         $("#form-order").submit(function(e) {
             e.preventDefault();
             $.ajax({
+                            headers : {'Authorization' : 'Bearer '+authUser.api_token},
                             type:'post',
                             data: $('#form-order').serialize(),
-                            url:"/order",
+                            url:"/api/v1/order",
                             dataType: 'json',
                             success:function(data){ 
                                 window.location.href = "/receipt/"+data.id_checkout.id+"";

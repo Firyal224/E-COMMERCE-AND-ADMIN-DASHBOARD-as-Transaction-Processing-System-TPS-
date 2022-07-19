@@ -61,8 +61,9 @@
             }else{
              
                 $.ajax({
+                            headers : {'Authorization' : 'Bearer '+authUser.api_token},
                             type:'get',
-                            url:"/get-chart",
+                            url:"/api/v1/get-chart",
                             success:function(data){ 
                                 console.log(data);
                                 document.getElementById("total-chart").innerHTML += '<span class="badge" id="integer">'+data+'</span>';
@@ -79,8 +80,8 @@
                 processing: true,
                 serverSide: true, //aktifkan server-side      
                 ajax: {  
-
-                    url: "/data-list-order",
+                    headers : {'Authorization' : 'Bearer '+authUser.api_token},
+                    url: "/api/v1/data-list-order",
                     type: 'GET',
                 },
                 columns: [
