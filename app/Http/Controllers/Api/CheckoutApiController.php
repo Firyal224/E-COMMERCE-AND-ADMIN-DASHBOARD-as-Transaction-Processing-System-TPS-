@@ -26,9 +26,11 @@ class CheckoutApiController extends Controller
             $request->merge(['email' => $user->email]);   
         }  
         $input = $request->all();
+        // dd($input);
         $post   =   Checkout::create($input); 
-        $update_status_pesanan   =   Pesanan::where('id_user',$user->id)->update([
-                'status_order' => 1,              
+        $update_status_pesanan   =   Pesanan::where('id_user',$user->id)->whereNull('status_order')->update([
+                'status_order' => 1,  
+                'kode_order' => $randomNumber,             
         ]);
         $id_checkout = Checkout::select('id')->where('kode_order',$randomNumber)->first();
         return response()->json(['post' => $post,'id_checkout' => $id_checkout]); 

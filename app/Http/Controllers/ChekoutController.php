@@ -37,7 +37,8 @@ class ChekoutController extends Controller
         $input = $request->all();
         $post   =   Checkout::create($input); 
         $update_status_pesanan   =   Pesanan::where('id_user',$user->id)->update([
-                'status_order' => 1,              
+                'status_order' => 1,  
+                'kode_order' => $randomNumber,            
         ]);
         $id_checkout = Checkout::select('id')->where('kode_order',$randomNumber)->first();
         return response()->json(['post' => $post,'id_checkout' => $id_checkout]); 

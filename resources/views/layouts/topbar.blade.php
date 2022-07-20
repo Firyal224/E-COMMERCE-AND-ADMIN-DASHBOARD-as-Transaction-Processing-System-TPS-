@@ -23,19 +23,20 @@
                     <i class="fas fa-heart text-primary"></i>
                     <span class="badge">0</span>
                 </a>
-                {{--  @auth
+                @auth
+                    @role('admin')
+                         
+                    @else
+                        <a href="#" class="btn border" id="total-chart">
+                            <i class="fas fa-shopping-cart text-primary"></i>  
+                        </a>   
+                    @endrole 
+                @else
+                    <a href="#" class="btn border" id="total-chart">
+                        <i class="fas fa-shopping-cart text-primary"></i>  
+                    </a>   
+                @endauth
 
-                        <a href="" class="btn border">
-                            <i class="fas fa-shopping-cart text-primary"></i>
-                            <span class="badge">{{$total_chart}}</span>
-                        </a>
-                       
-                
-                @else  --}}
-                <a href="#" class="btn border" id="total-chart">
-                    <i class="fas fa-shopping-cart text-primary"></i>
-                    
-                </a>
       
             </div>
         </div>

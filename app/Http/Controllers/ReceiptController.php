@@ -14,15 +14,17 @@ class ReceiptController extends Controller
     public function index($id){
         $categories = Kategori::all();
         $user = Auth::user();
-        $list_product =  Pesanan::with('products')->where('id_user',$user->id)->whereNotNull('status_order')->get();
-        $subtotal = Pesanan::where('id_user',$user->id)->whereNotNull('status_order')->sum('total_harga');
-        $final_total = $subtotal + 10000;
 
         $contact = Checkout::where('id',$id)->get();
         $get_date = Checkout::select('created_at')->where('id',$id)->first();
         $date = date('d-m-Y', strtotime($get_date->created_at));
         
-        $get_data = Checkout::select('kode_order','status','payment')->where('id',$id)->first();
+        $get_data = Checkout::where('id',$id)->first();
+        
+        $list_product =  Pesanan::with('products')->where('id_user',$user->id)->where('kode_order',$get_data->kode_order)->whereNotNull('status_order')->get();
+        $subtotal = Pesanan::where('id_user',$user->id)->where('kode_order',$get_data->kode_order)->whereNotNull('status_order')->sum('total_harga');
+        $final_total = $subtotal + 10000;
+
         $kode_order = $get_data->kode_order;
         $status = $get_data->status;
         $payment = $get_data->payment;

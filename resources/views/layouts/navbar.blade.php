@@ -54,7 +54,24 @@
                         </div>
                         <div class="navbar-nav ml-auto py-0">
                         @auth
-                        <div class="nav-item dropdown">
+                         @role('admin')
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }}</a>
+                                <div class="dropdown-menu rounded-0 m-0">
+                                    <a href="/admin" class="dropdown-item">Dashboard</a>
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                                    onclick="event.preventDefault();
+                                                                    document.getElementById('logout-form').submit();">
+                                                        {{ __('Logout') }}
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                        @csrf
+                                    </form>
+                                </div>
+                              
+                            </div>
+                         @else
+                            <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }}</a>
                                 <div class="dropdown-menu rounded-0 m-0">
                                     <a href="/list-order" class="dropdown-item">My Orders</a>
@@ -68,8 +85,8 @@
                                     </form>
                                 </div>
                               
-                        </div>
-
+                            </div>
+                         @endrole 
                         @else
                             <a href="/login" class="nav-item nav-link">Login</a>
                             <a href="/register" class="nav-item nav-link">Register</a>

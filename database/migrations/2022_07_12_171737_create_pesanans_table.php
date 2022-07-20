@@ -25,6 +25,7 @@ class CreatePesanansTable extends Migration
             ->onUpdate('cascade');
             $table->integer('total_barang');
             $table->integer('status_order')->nullable();
+            $table->integer('kode_order')->nullable();
             $table->integer('total_harga');
             $table->timestamps();
         });

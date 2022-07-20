@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\ShopApiController;
 use App\Http\Controllers\Api\CheckoutApiController;
 use App\Http\Controllers\Api\ReceiptApiController;
 use App\Http\Controllers\Api\ListOrderApiController;
+use App\Http\Controllers\Api\AdminApiController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -47,4 +48,12 @@ Route::middleware('jwt.verify:user')->prefix('v1')->group(function () {
     Route::post('/upload-pembayaran', [ReceiptApiController::class, 'store']);
     Route::get('/data-list-order', [ListOrderApiController::class, 'datatable_orders']);
 
+    
+
+});
+
+Route::middleware('jwt.verify:admin')->prefix('admin')->group(function () {
+    Route::get('/data-order-user', [AdminApiController::class, 'datatable_orders']);
+    Route::post('/update-status', [AdminApiController::class, 'updateStatus']);
+    Route::post('/get-detail-user', [AdminApiController::class, 'userDetail']);
 });

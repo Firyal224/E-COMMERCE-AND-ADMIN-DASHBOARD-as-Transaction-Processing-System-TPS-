@@ -8,6 +8,7 @@ use App\Http\Controllers\ChartController;
 use App\Http\Controllers\ChekoutController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\ListOrderController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,7 +33,7 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 Route::get('/cek-role', function () {
     if(auth()->user()->hasRole('admin')){
      
-        // return redirect('/admin');
+        return redirect('/admin');
     }else{
         
         return redirect('/');
@@ -48,7 +49,7 @@ Route::get('/show-detail/{id}', [ShopController::class, 'show']);
 
 
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['verified', 'role:user']], function () {
     Route::post('/add-chart', [ShopController::class, 'add_chart']);
     Route::get('/get-chart', [ShopController::class, 'get_chart']);
     
@@ -66,6 +67,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/list-order', [ListOrderController::class, 'index']);
     Route::get('/data-list-order', [ListOrderController::class, 'datatable_orders']);
+});
+
+Route::group(['middleware' => ['verified', 'role:admin']], function () {
+    Route::get('/admin', [AdminController::class, 'index']);
 });
 
 
