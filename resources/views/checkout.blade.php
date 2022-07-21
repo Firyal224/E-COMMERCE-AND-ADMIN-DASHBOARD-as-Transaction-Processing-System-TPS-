@@ -137,8 +137,8 @@
                     }
                 });      
         });  
-
         var authUser = {!! App\Models\User::where('id', auth()->id())->first(); !!};
+        
         $("#form-order").submit(function(e) {
             e.preventDefault();
             $.ajax({

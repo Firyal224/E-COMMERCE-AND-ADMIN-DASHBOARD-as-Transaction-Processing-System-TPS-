@@ -83,9 +83,9 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });      
-        });  
+        });
 
-        $(document).ready(function () {         
+        function get_subtotal(){
             $.ajax({        
                             headers : {'Authorization' : 'Bearer '+authUser.api_token},
                             type:'get',
@@ -101,6 +101,10 @@
                                         
                             }
             });
+        }  
+
+        $(document).ready(function () {         
+            get_subtotal();
             $('#table_chart').DataTable({
                 processing: true,
                 serverSide: true, //aktifkan server-side      
@@ -151,20 +155,7 @@
                 success: function (data) {      
                     var oTable = $('#table_chart').dataTable(); 
                     oTable.fnDraw(false); 
-                    $.ajax({
-                            headers : {'Authorization' : 'Bearer '+authUser.api_token},
-                            type:'get',
-                            url:"/api/v1/subtotal",
-                            success:function(data){ 
-                                 total = parseInt(data)+shipping;
-                                 document.getElementById("subtotal").innerHTML += '<h6 class="font-weight-medium" id="total_belanja">Rp.'+data+'</h6>';
-                                 document.getElementById("total").innerHTML += ' <h5 class="font-weight-bold" id="total_plusShipping">Rp.'+total+'</h5>';       
-                            },
-                            error: function (data) { //jika error tampilkan error pada console
-                                console.log('Error:', data);
-                                        
-                            }
-                    });
+                    get_subtotal();
                     
                 }
             })
@@ -198,20 +189,7 @@
                     success:function(data){
                         var oTable = $('#table_chart').dataTable(); 
                         oTable.fnDraw(false);  
-                        $.ajax({
-                            headers : {'Authorization' : 'Bearer '+authUser.api_token},
-                            type:'get',
-                            url:"/api/v1/subtotal",
-                            success:function(data){ 
-                                 total = parseInt(data)+shipping;
-                                 document.getElementById("subtotal").innerHTML += '<h6 class="font-weight-medium" id="total_belanja">Rp.'+data+'</h6>';
-                                 document.getElementById("total").innerHTML += ' <h5 class="font-weight-bold" id="total_plusShipping">Rp.'+total+'</h5>';     
-                            },
-                            error: function (data) { //jika error tampilkan error pada console
-                                console.log('Error:', data);
-                                        
-                            }
-                         });
+                        get_subtotal();
                 
                     },
                     error: function (data) { //jika error tampilkan error pada console

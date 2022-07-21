@@ -224,6 +224,7 @@
         });   
         authUser = {!! App\Models\User::where('id', auth()->id())->first(); !!}
         console.log(authUser);
+        
         $(document).ready(function () {    
             if(authUser == null){
              
@@ -246,6 +247,7 @@
                 });
             }
         }); 
+
         function loadData($value){
             console.log($value[0].images);
             $(function() {

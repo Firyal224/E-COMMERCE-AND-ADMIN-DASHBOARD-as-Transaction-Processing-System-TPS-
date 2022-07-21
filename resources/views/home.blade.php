@@ -295,16 +295,12 @@
                                 
                     }
                 });
-            }
-
-           
-            
+            }  
         } 
-          function viewDetail($id) {
+        function viewDetail($id) {
             $.ajax({
-                headers : {'Authorization' : 'Bearer '+authUser.api_token},
                 type:'get',
-                url: "/api/show-detail/"+$id+"",
+                url: "/show-detail/"+$id+"",
                 success:function(data){ 
                   console.log(data);
                   document.getElementById("modalBody").innerHTML 

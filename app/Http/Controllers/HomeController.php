@@ -15,9 +15,6 @@ class HomeController extends Controller
 
         $products = Products::with('kategori')->get();
         $categories = Kategori::all();
-        // $user = Auth::user();
-        // $total_chart = Pesanan::where('id_user',$user->id)->sum('total_barang');
-        // dd($data);
 
         return view('home', compact('products', 'categories'));
     }

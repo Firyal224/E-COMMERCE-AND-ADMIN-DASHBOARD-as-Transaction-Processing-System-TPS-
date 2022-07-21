@@ -43,7 +43,6 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
         
             $token = auth()->guard('api')->attempt($credentials_api);
-            // dd($token);
             $user =User::where('email', $email['email'])->first();
            
             if($user != null){

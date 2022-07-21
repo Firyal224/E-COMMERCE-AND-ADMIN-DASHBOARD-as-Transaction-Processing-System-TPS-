@@ -161,8 +161,7 @@
             if(authUser == null){
              
              document.getElementById("total-chart").innerHTML += '<span class="badge" id="integer">0</span>';
-            }else{
-             
+            }else{   
                 $.ajax({
                             headers : {'Authorization' : 'Bearer '+authUser.api_token},
                             type:'get',
