@@ -10,5 +10,18 @@
 
 <!-- Template Javascript -->
     <script src="js/main.js"></script>
-    
+    <script>
+        $(document).ready(function () {
+            $('#choseCategories-1 a').on('click', function () {
+                var id= ($(this).data('value'));
+                window.location.href = "/shop/"+id+"";
+            });
+            $('#choseCategories-2 a').on('click', function () {
+                var id= ($(this).data('value'));
+                window.location.href = "/shop/"+id+"";
+            });
+        });
+        
+       
+    </script>
 @yield('javascript')

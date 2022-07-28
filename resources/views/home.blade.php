@@ -1,5 +1,8 @@
 @extends('layouts.index')
-
+@section('css')
+   <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+@stop
 @section('navbar')
     <div id="header-carousel" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">

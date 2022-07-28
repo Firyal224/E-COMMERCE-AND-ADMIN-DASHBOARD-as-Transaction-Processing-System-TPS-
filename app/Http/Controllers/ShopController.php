@@ -11,17 +11,22 @@ class ShopController extends Controller
 {
     //
 
-    public function index(Request $request){
+    public function index($id){
+        $choseCategories = $id;
         $products = Products::with('kategori')->get();
         $categories = Kategori::all();
-        return view('shop', compact('products', 'categories'));
+        return view('shop', compact('products', 'categories','choseCategories'));
     }
 
     public function product(Request $request){
 
-        $data = Products::with('kategori')->get();
-        // dd($data);
-
+        $data = '';
+        if($request->choseCategoriesId != 0){
+            $data = Products::with('kategori')->where('id_kategori',$request->choseCategoriesId)->get();
+        }else{
+            $data = Products::with('kategori')->get();
+        
+        }
         return response()->json($data);
     }
     public function show($id)

@@ -43,8 +43,8 @@ Route::get('/cek-role', function () {
 });
 
 Route::get('/', [HomeController::class, 'index']);
-Route::get('/shop', [ShopController::class, 'index']);
-Route::get('/loaddata', [ShopController::class, 'product']);
+Route::get('/shop/{id}', [ShopController::class, 'index']);
+Route::post('/loaddata', [ShopController::class, 'product']);
 Route::get('/show-detail/{id}', [ShopController::class, 'show']);
 
 

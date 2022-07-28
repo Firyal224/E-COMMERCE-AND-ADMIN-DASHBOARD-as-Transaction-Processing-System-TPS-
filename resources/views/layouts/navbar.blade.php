@@ -9,24 +9,24 @@
                 <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
                  
                   
-                    <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
-                        
-                       
+                    <div class="navbar-nav w-100 overflow-hidden" style="height: 410px" >       
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link" data-toggle="dropdown">Dresses <i class="fa fa-angle-down float-right mt-1"></i></a>
-                            <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
+                            <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0" id="choseCategories-1">
                                 @foreach ($categories as $categori )
                                 @if($categori->id >0 && $categori->id <=2)
-                                <a href="" class="dropdown-item">{{$categori->nama}}</a>
+                                <a href="#" class="dropdown-item" data-value={{$categori->id}}>{{$categori->nama}}</a>
                                 @endif
                                 @endforeach
                             </div>
                         </div>
-                        @foreach ($categories as $categori )
-                                @if($categori->id >2)
-                                <a href="" class="nav-item nav-link">{{$categori->nama}}</a>
-                                @endif
-                         @endforeach
+                        <div id="choseCategories-2">
+                            @foreach ($categories as $categori )
+                                    @if($categori->id >2)
+                                    <a href="#" class="nav-item nav-link" data-value={{$categori->id}}>{{$categori->nama}}</a>
+                                    @endif
+                            @endforeach
+                        </div>
                     </div>
                 </nav>
             </div>
@@ -41,7 +41,7 @@
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             <a href="/" class="nav-item nav-link active">Home</a>
-                            <a href="/shop" class="nav-item nav-link">Shop</a>
+                            <a href="/shop/0" class="nav-item nav-link">Shop</a>
                           
                             {{--  <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>

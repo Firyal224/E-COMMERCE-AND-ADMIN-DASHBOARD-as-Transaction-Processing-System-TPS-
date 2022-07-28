@@ -26,6 +26,7 @@
     <!-- Shop Start -->
     <div class="container-fluid pt-5">
         <div class="row px-xl-5">
+             <input type="hidden" id="choseCategoriesId" name="choseCategoriesId" value={{$choseCategories}}>
             <!-- Shop Sidebar Start -->
             <div class="col-lg-3 col-md-12">
                 <!-- Price Start -->
@@ -175,6 +176,32 @@
                     </div>                
                     <div class="row data-container pr-3" style="margin-left:10px"></div>
                     <div class="col-12 pb-1" id="pagination-demo1">
+                 
+                    <div class="container-notfound" id="ghost" style="display:none">
+                            <div class="ghost-copy">
+                                <div class="one"></div>
+                                <div class="two"></div>
+                                <div class="three"></div>
+                                <div class="four"></div>
+                            </div>
+                            <div class="ghost">
+                                <div class="face">
+                                <div class="eye"></div>
+                                <div class="eye-right"></div>
+                                <div class="mouth"></div>
+                                </div>
+                            </div>
+                            <div class="shadow"></div>
+                            </div>
+                    </div>
+                    <div class="bottom" id="notfound" style="display:none;margin-left:30%">
+                            <p class="title-notfound">Boo, Pencarian anda tidak ditemukan!</p>
+                            <div class="buttons">
+                                <button class="btn" onclick="history.back()" type="button" style="background-color:#D19C97">Back</button>
+                                <button class="btn" onclick="window.location.href = '/'" type="button" style="background-color:#e8eaed;margin-left:20px">Home</button>
+                            </div>
+                    </div>
+                    
                 </div>
             </div>
             <!-- Shop Product End -->
@@ -214,12 +241,25 @@
             });
 
             $.ajax({
-                type:'get',
-                url:"/loaddata",
-                success:function(data){ 
-                  console.log(data);
-                  loadData(data);
-                }
+                    type:'POST',
+                    url:"/loaddata",
+                    data:{choseCategoriesId:$('#choseCategoriesId').val()},
+                    dataType: 'json',
+                    success:function(data){ 
+                        var length = data.length;
+                        if(data.length != 0){
+                            loadData(data);
+                        }else{
+                            document.getElementById("notfound").style.display = "block";
+                            document.getElementById("ghost").style.display = "block";
+                            document.getElementById("pagination-demo1").style.display = "block";
+                        }
+                        
+                    },
+                    error: function (data) { //jika error tampilkan error pada console
+                        console.log('Error:', data);
+                                
+                    }
             });
         });   
         authUser = {!! App\Models\User::where('id', auth()->id())->first(); !!}
@@ -249,7 +289,6 @@
         }); 
 
         function loadData($value){
-            console.log($value[0].images);
             $(function() {
             (function(name) {
             var container = $('#pagination-' + name);
@@ -268,9 +307,10 @@
                                     window.console && console.log(response, pagination);
                             
                                     var dataHtml = '';
-                            
+
                                     $.each(response, function (index, item,harga) {
-                                        dataHtml += '<div class="col-lg-4 col-md-6 col-sm-12 pb-1 "> <div class="card product-item border-0 mb-4"><div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0"><img class="img-fluid w-100" src="img/'+$value[index].images+'" alt=""></div> <div class="card-body border-left border-right text-center p-0 pt-4 pb-3"><h6 class="text-truncate mb-3">'+$value[index].nama+'</h6><div class="d-flex justify-content-center"> <h6>Rp.'+$value[index].harga+'</h6><h6 class="text-muted ml-2"><del>$123.00</del></h6></div></div><div class="card-footer d-flex justify-content-between bg-light border"><a href="#" class="btn btn-sm text-dark p-0" onclick="viewDetail('+$value[index].id+')"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a><a href="#" class="btn btn-sm text-dark p-0" onclick="addProduct('+$value[index].id+')"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a></div></div></div>';
+                                        var baseUrl = '';
+                                        dataHtml += '<div class="col-lg-4 col-md-6 col-sm-12 pb-1 "> <div class="card product-item border-0 mb-4"><div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0"><img class="img-fluid w-100" src="http://localhost:8000/img/'+$value[index].images+'" alt=""></div> <div class="card-body border-left border-right text-center p-0 pt-4 pb-3"><h6 class="text-truncate mb-3">'+$value[index].nama+'</h6><div class="d-flex justify-content-center"> <h6>Rp.'+$value[index].harga+'</h6><h6 class="text-muted ml-2"><del>$123.00</del></h6></div></div><div class="card-footer d-flex justify-content-between bg-light border"><a href="#" class="btn btn-sm text-dark p-0" onclick="viewDetail('+$value[index].id+')"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a><a href="#" class="btn btn-sm text-dark p-0" onclick="addProduct('+$value[index].id+')"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a></div></div></div>';
                                     });
                             
                             
@@ -318,7 +358,6 @@
                 console.log("jju");
                 window.location.href = "/login"; 
             }else{
-                console.log("y");
                 $.ajax({
                     headers : {'Authorization' : 'Bearer '+authUser.api_token},
                     type:'POST',
